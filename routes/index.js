@@ -2,7 +2,6 @@ const { json } = require("express");
 var express = require("express");
 const { send } = require("process");
 var router = express.Router();
-
 /*Database "connection"*/
 var Data = JSON.parse(require("fs").readFileSync("testData/Data.json", "utf8"));
 /* GET home page. */
@@ -18,7 +17,7 @@ router.get("/EP/:id", function (req, res, next) {
 });
 
 router.get("/search/name", function (req, res, next) {
-  res.json(Data.data.filter((x) => x.name.include(req)));
+  res.json(Data.data.filter((x) => x.name == req.params.name));
 });
 
 /* lots Get requests*/

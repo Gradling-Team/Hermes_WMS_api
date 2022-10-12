@@ -1,1 +1,61 @@
-{"products":[{"id":148,"idParcel":35,"idProduct":12,"location":"J58C54"},{"id":149,"idParcel":35,"idProduct":12,"location":"J58D03"},{"id":150,"idParcel":144,"idProduct":14,"location":"J58R01"}],"lots":[{"id":35,"peremption":"2016-08-10"},{"id":13,"peremption":"2022-12-30"},{"id":144,"peremption":"2022-11-25"},{},{"id":149,"peremption":"1995-12-12"}],"data":[{"id":12,"name":"Paracetamol 500mg","cost":10,"retail":20},{"id":14,"name":"Ciclosporine 40cc","cost":100,"retail":200}]}
+{
+    "products": [
+        {
+            "id": 148,
+            "idParcel": 35,
+            "idProduct": 12,
+            "location": "J58C54"
+        },
+        {
+            "id": 149,
+            "idParcel": 35,
+            "idProduct": 12,
+            "location": "J58D03"
+        },
+        {
+            "id": 150,
+            "idParcel": 144,
+            "idProduct": 14,
+            "location": "J58R01"
+        }
+    ],
+    "lots": [
+        {
+            "id": 35,
+            "peremption": "2016-08-10"
+        },
+        {
+            "id": 13,
+            "peremption": "2022-12-30"
+        },
+        {
+            "id": 144,
+            "peremption": "2022-11-25"
+        },
+        {},
+        {
+            "id": 149,
+            "peremption": "1995-12-12"
+        }
+    ],
+    "data": [
+        {
+            "id": 12,
+            "name": "Paracetamol 500mg",
+            "cost": 10,
+            "retail": 20
+        },
+        {
+            "id": 14,
+            "name": "Ciclosporine 40cc",
+            "cost": 100,
+            "retail": 200
+        },
+        {
+            "id": 15,
+            "name": "penne",
+            "cost": "400",
+            "retail": "800"
+        }
+    ]
+}
