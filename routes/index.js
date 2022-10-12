@@ -16,6 +16,11 @@ router.get("/EP", function (req, res, next) {
 router.get("/EP/:id", function (req, res, next) {
   res.json(Data.products.filter((x) => x.id == req.params.id));
 });
+
+router.get("/search/name", function (req, res, next) {
+  res.json(Data.data.filter((x) => x.name.include(req)));
+});
+
 /* lots Get requests*/
 router.get("/lots", function (req, res, next) {
   res.json(Data.lots);
