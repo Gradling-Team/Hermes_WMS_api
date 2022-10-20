@@ -9,7 +9,30 @@ var models = require("../src/models/init-models.js")(
 const errHandler = (err) => {
   console.error("Error: ", err);
 };
-
+router.get("/", async(req, res, next)=>{
+  res.status(401).json("unauthorized");
+});
 /* start request definitions */
-
+router.get("/:token", async (req, res, next) => {
+  await models.Utilisateur.findOne({
+    where: {
+      Token: req.params.token,
+    },
+  })
+    .then((user) => {
+      if (user.TokenTTL < Date.now()) {
+        res.status(401).send("Token expired");
+      }
+    })
+    .catch((err) => {
+      res.status(404).send("Token not found");
+    });
+  await models.WAREHOUSE.findAll({})
+    .then((warehouse) => {
+      res.json(warehouse);
+    })
+    .catch((err) => {
+      res.status(404).send("No product forms found");
+    });
+});
 module.exports = router;
