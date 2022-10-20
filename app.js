@@ -18,9 +18,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
+/* setup routes*/
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/ep", require("./routes/ep"));
+app.use("/groupes", require("./routes/groupes"));
+app.use("/users", require("./routes/users"));
+app.use("/lot", require("./routes/lot"));
+app.use("/warehouse", require("./routes/warehouse"));
+app.use("/product", require("./routes/product"));
+app.use("/reception", require("./routes/reception"));
+app.use("warn", require("./routes/warn"));
+app.use("ticket", require("./routes/tickets"));
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
