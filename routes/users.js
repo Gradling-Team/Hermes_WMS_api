@@ -1,40 +1,49 @@
 var express = require("express");
+const sequelize = require("../src/database/connector.js");
+const Sequelize = require("sequelize");
 var router = express.Router();
-var models = require("../src/models/init-models.js");
+var models = require("../src/models/init-models.js")(
+  sequelize,
+  Sequelize.DataTypes
+);
 const errHandler = (err) => {
   console.error("Error: ", err);
 };
-require("../src/database/connection.js");
-models.initModels(sequelize);
-/* GET users listing. */
-router.get("/", function (req, res, next) {
-  res.statusCode = 401;
-  res.send("Unauthorized");
+
+/* GET users token */
+router.get("/token/:login/:hash", async (req, res, next) => {
+  const login = req.params.login;
+  const hash = req.params.hash;
+  const user = await models.Utilisateur.findOne({
+    where: { Identifiant: login },
+  });
+  if (user.Password === hash) {
+    if (
+      user.TokenTTL < Date.now() ||
+      user.TokenTTL === null ||
+      user.Token === null
+    ) {
+      const token = Math.random().toString(36).substr(2);
+      const tokenTTL = Date.now() + 3600000;
+      user.update({ Token: token, TokenTTL: tokenTTL });
+    }
+    res.json(user.Token);
+  } else {
+    res.send("error");
+  }
 });
-router.get("/token/:login/:hash", function (req, res, next) {
-  var login = req.params.login;
-  var hash = req.params.hash;
-  console.log("login: " + login);
-  console.log("hash: " + hash);
-  models.Utilisateur.findOne()
-    .then((user) => {
-      console.log("user: " + user);
-      if (user.Identifiant == login && user.Password == hash) {
-        console.log("user found");
-        res.statusCode = 200;
-        if (user.Token == null || user.TokenTTL < new Date()) {
-          user.Token = Math.random().toString(36).substring(2, 15);
-          user.TokenTTL = new Date();
-          user.TokenTTL.setHours(user.TokenTTL.getHours() + 1);
-          user.save();
-        }
-        res.Json(user.Token);
-      } else {
-        console.log("user not found");
-        res.statusCode = 401;
-        res.send("Unauthorized");
-      }
-    })
-    .catch(errHandler);
+/*check token*/
+router.get("/check/:token", async (req, res, next) => {
+  const token = req.params.token;
+  try {
+    const user = await models.Utilisateur.findOne({ where: { Token: token } });
+    if (user.TokenTTL > Date.now()) {
+      res.json(true);
+    } else {
+      res.json(false);
+    }
+  } catch (err) {
+    res.status(404).json(false);
+  }
 });
 module.exports = router;
