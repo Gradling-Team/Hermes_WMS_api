@@ -10,6 +10,12 @@ const errHandler = (err) => {
   console.error("Error: ", err);
 };
 
+
+
+/*Get User List*/
+router.get("/", async(req, res, next)=>{
+  res.status(401).json('forbidden');
+});
 /* GET users token */
 router.get("/token/:login/:hash", async (req, res, next) => {
   const login = req.params.login;
