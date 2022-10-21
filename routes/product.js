@@ -52,7 +52,7 @@ router.get("/:token/:name", async (req, res, next) => {
     });
   await models.PRODUCT_FORM.findAll({
     where: {
-      Name: req.params.name,
+      Nom: req.params.name,
     },
   })
     .then((productForm) => {
