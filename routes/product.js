@@ -9,7 +9,7 @@ var models = require("../src/models/init-models.js")(
 const errHandler = (err) => {
   console.error("Error: ", err);
 };
-router.get("/", async(req, res, next)=>{
+router.get("/", async (req, res, next) => {
   res.status(401).json("unauthorized");
 });
 /* start request definitions */

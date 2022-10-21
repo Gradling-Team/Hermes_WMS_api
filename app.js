@@ -28,8 +28,8 @@ app.use("/lot", require("./routes/lot"));
 app.use("/warehouse", require("./routes/warehouse"));
 app.use("/product", require("./routes/product"));
 app.use("/reception", require("./routes/reception"));
-app.use("warn", require("./routes/warn"));
-app.use("ticket", require("./routes/tickets"));
+app.use("/warn", require("./routes/warn"));
+app.use("/tickets", require("./routes/tickets"));
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
