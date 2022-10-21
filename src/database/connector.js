@@ -11,5 +11,7 @@ sequelize.authenticate().then(() => {
   console.log("Connection has been established successfully.");
 });
 models.initModels(sequelize);
-
+sequelize.sync().then(() => {
+  console.log("Database & tables synced!");
+});
 module.exports = sequelize;
