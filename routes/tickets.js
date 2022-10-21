@@ -37,7 +37,7 @@ router.get("/:token", async (req, res, next) => {
     });
 });
 /* post ticket order */
-router.post("/post/new/:token", async (req, res, next) => {
+router.post("/:token", async (req, res, next) => {
   await models.Utilisateur.findOne({
     where: {
       Token: req.params.token,
