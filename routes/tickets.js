@@ -50,6 +50,7 @@ router.post("/:token", async (req, res, next) => {
     })
     .catch((err) => {
       res.status(404).send("Token not found");
+      stop;
     });
   await models.ORDER_TICKET.create({
     DATETIME: Date.now(),
@@ -61,7 +62,7 @@ router.post("/:token", async (req, res, next) => {
       res.json(order_ticket);
     })
     .catch((err) => {
-      res.status(401).send("No product Created");
+      res.status(401).send("No ticket Created");
     });
 });
 module.exports = router;

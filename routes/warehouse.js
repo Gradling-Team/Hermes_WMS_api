@@ -27,12 +27,39 @@ router.get("/:token", async (req, res, next) => {
     .catch((err) => {
       res.status(404).send("Token not found");
     });
-  await models.WAREHOUSE.findAll({})
+  await models.ORDER_TICKET.findAll({})
     .then((warehouse) => {
       res.json(warehouse);
     })
     .catch((err) => {
       res.status(404).send("No product forms found");
+    });
+});
+
+router.get("/:token/:id", async (req, res, next) => {
+  await models.Utilisateur.findOne({
+    where: {
+      Token: req.params.token,
+    },
+  })
+    .then((user) => {
+      if (user.TokenTTL < Date.now()) {
+        res.status(401).json("Token expired");
+      }
+    })
+    .catch((err) => {
+      res.status(404).json("Token not found");
+    });
+    await models.ORDER_TICKET.findAll({
+      where: {
+        ID_ORDER: req.params.id,
+      },
+    })
+    .then((order_ticket) => {
+      res.json(order_ticket);
+    })
+    .catch((err) => {
+      res.status(404).send("No order found");
     });
 });
 module.exports = router;

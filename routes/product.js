@@ -62,4 +62,30 @@ router.get("/:token/:name", async (req, res, next) => {
       res.status(404).send("No product form found");
     });
 });
+router.post("/:token", async (req, res, next) => {
+  await models.Utilisateur.findOne({
+    where: {
+      Token: req.params.token,
+    },
+  })
+    .then((user) => {
+      if (user.TokenTTL < Date.now()) {
+        res.status(401).send("Token expired");
+      }
+    })
+    .catch((err) => {
+      res.status(404).send("Token not found");
+    });
+  await models.PRODUCT_FORM.create({
+   Nom:req.body.Nom,
+   COST:parseInt(req.body.COST),
+   PRICE:parseInt(req.body.PRICE),
+  })
+    .then((product) => {
+      res.json(product);
+    })
+    .catch((err) => {
+      res.status(401).send("No product Created");
+    });
+});
 module.exports = router;
