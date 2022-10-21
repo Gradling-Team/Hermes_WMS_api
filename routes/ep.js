@@ -37,4 +37,32 @@ router.get("/:token", async (req, res, next) => {
       res.status(404).send("No product forms found");
     });
 });
+
+router.get("/:token/:id", async (req, res, next) => {
+  await models.Utilisateur.findOne({
+    where: {
+      Token: req.params.token,
+    },
+  })
+    .then((user) => {
+      if (user.TokenTTL < Date.now()) {
+        res.status(401).json("Token expired");
+      }
+    })
+    .catch((err) => {
+      res.status(404).json("Token not found");
+    });
+  await models.ENTITY.findAll({
+    where: {
+      Name: req.params.id,
+    },
+  })
+    .then((entity) => {
+      res.json(entity);
+    })
+    .catch((err) => {
+      res.status(404).send("No entity found");
+    });
+});
+
 module.exports = router;
